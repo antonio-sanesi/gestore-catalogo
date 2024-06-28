@@ -1,13 +1,20 @@
 package dev.anto.gestore.catalogo.service;
 
+import dev.anto.gestore.catalogo.entity.Product;
+import dev.anto.gestore.catalogo.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+
+@Service
 public class ProductServiceImpl implements ProductService {
 
+    @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    public ProductServiceImpl (ProductRepository theProductRepository) {
-        ProductRepository = theProductRepository;
-    }
 
     @Override
     public List<Product> findAll() {
@@ -16,25 +23,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findById (int theId) {
-        Optional <Product> result = ProductRepository.findById(theId);
-
-        Product theProduct = null;
-            if (result.isPresent()) {
-                theProduct = result.get();
-            }
-            else {
-                throw new RunTimeException;
-            }
-            return theproduct;
+        return productRepository.findById(theId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "prodotto mancante"));
     }
 
     @Override
     public Product save(Product theProduct) {
-        productRepository.save(theProduct);
+        return productRepository.save(theProduct);
     }
 
     @Override
-    void Product delete (int theId) {
-        productRepository.delete(theProduct);
+    public void deleteById(int theId) {
+        var daCancellare = this.findById(theId);
+        productRepository.delete(daCancellare);
     }
+
 }

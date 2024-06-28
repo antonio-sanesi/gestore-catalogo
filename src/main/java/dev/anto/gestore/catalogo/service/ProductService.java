@@ -1,5 +1,9 @@
 package dev.anto.gestore.catalogo.service;
 
+import dev.anto.gestore.catalogo.entity.Product;
+
+import java.util.List;
+
 public interface ProductService {
 
     List<Product> findAll();
