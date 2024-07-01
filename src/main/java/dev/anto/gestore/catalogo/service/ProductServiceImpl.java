@@ -23,12 +23,37 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findById (int theId) {
-        return productRepository.findById(theId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "prodotto mancante"));
+        return productRepository.findById(theId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Prodotto mancante")
+        );
     }
 
     @Override
     public Product save(Product theProduct) {
+        //controllo che la descrizione sia okay
+        if (theProduct.getDescription() == null
+                || theProduct.getDescription().trim().length() < 3
+                || theProduct.getDescription().length() > 200
+        ){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Descrizione prodotto non valida");
+        }
+
+        //controllo che il nome sia okay
+        if (theProduct.getName() == null
+                || theProduct.getName().trim().length() < 3
+                || theProduct.getName().length() > 50
+        ){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome prodotto non valido");
+        }
+
+        //controllo che il prezzo sia okay
+        if (theProduct.getPrice() == null
+                || theProduct.getPrice() <= 0
+                || theProduct.getPrice() >= 999
+        ){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Prezzo prodotto non valido");
+        }
+
         return productRepository.save(theProduct);
     }
 
