@@ -2,9 +2,12 @@ package dev.anto.gestore.catalogo.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -18,8 +21,25 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, exc.getStatusCode());
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorDto> handleException(MethodArgumentNotValidException exc){
+        ErrorDto error = new ErrorDto();
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+
+        //compongo il messaggio di errore
+        error.setMessage(
+                exc.getBindingResult().getAllErrors().stream()
+                        .map(validationError -> validationError.getDefaultMessage())
+                        .collect(Collectors.joining("\n"))
+        );
+
+        return new ResponseEntity<>(error, exc.getStatusCode());
+    }
+
     @ExceptionHandler
     public ResponseEntity<ErrorDto> handleException(Exception exc) {
+        System.out.println(exc.getClass().getName());
+
         ErrorDto error = new ErrorDto();
         error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         error.setMessage(exc.getMessage());

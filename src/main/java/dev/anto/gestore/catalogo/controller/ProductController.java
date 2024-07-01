@@ -3,6 +3,7 @@ package dev.anto.gestore.catalogo.controller;
 
 import dev.anto.gestore.catalogo.entity.Product;
 import dev.anto.gestore.catalogo.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class ProductController {
     }
 
     @PostMapping("")
-    public Product addProduct(@RequestBody Product theProduct) {
+    public Product addProduct(@Valid @RequestBody Product theProduct) {
         theProduct.setId(null);
         return productService.save(theProduct);
     }
@@ -34,7 +35,7 @@ public class ProductController {
     @PutMapping("/{productId}")
     public Product updateProduct(
             @PathVariable Integer productId,
-            @RequestBody Product theProduct
+            @Valid @RequestBody Product theProduct
     ) {
         theProduct.setId(productId);
         System.out.println(theProduct.getId());
