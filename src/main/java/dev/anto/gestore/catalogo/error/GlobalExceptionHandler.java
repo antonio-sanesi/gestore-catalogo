@@ -21,9 +21,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<ErrorDto> handleException(Exception exc) {
         ErrorDto error = new ErrorDto();
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         error.setMessage(exc.getMessage());
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
