@@ -1,4 +1,4 @@
-package dev.anto.gestore.catalogo.service;
+package dev.anto.gestore.catalogo.service.interfaces;
 
 import dev.anto.gestore.catalogo.entity.Product;
 

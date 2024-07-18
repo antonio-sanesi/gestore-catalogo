@@ -1,11 +1,11 @@
 package dev.anto.gestore.catalogo.controller;
 
 import dev.anto.gestore.catalogo.dto.OrderUserDto;
-import dev.anto.gestore.catalogo.service.OrderService;
+import dev.anto.gestore.catalogo.entity.Order;
+import dev.anto.gestore.catalogo.service.interfaces.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,4 +21,25 @@ public class OrderController {
         return orderService.findAllByUser();
     }
 
+    @PostMapping("")
+    public Order addOrder(@Valid @RequestBody Order theOrder) {
+        theOrder.setId(null);
+        return orderService.save(theOrder);
+    }
+
+    @PutMapping("/{orderId}")
+    public Order updateOrder(
+            @PathVariable Integer orderId,
+            @Valid @RequestBody Order theOrder
+    ) {
+        theOrder.setId(orderId);
+        System.out.println(theOrder.getId());
+        return orderService.save(theOrder);
+    }
+
+    @DeleteMapping("/{orderId}")
+    public String deleteProduct(@PathVariable int orderId) {
+        orderService.deleteById(orderId);
+        return "Deleted Product - " + orderId;
+    }
 }

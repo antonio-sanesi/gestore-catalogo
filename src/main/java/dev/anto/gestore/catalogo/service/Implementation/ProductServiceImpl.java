@@ -1,7 +1,8 @@
-package dev.anto.gestore.catalogo.service;
+package dev.anto.gestore.catalogo.service.Implementation;
 
 import dev.anto.gestore.catalogo.entity.Product;
 import dev.anto.gestore.catalogo.repository.ProductRepository;
+import dev.anto.gestore.catalogo.service.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

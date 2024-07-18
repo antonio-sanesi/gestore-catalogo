@@ -2,7 +2,7 @@ package dev.anto.gestore.catalogo.controller;
 
 
 import dev.anto.gestore.catalogo.entity.Product;
-import dev.anto.gestore.catalogo.service.ProductService;
+import dev.anto.gestore.catalogo.service.interfaces.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
