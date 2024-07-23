@@ -22,15 +22,17 @@ public class OrderController {
     }
 
     @PostMapping("")
-    public Order addOrder(@Valid @RequestBody Order theOrder) {
+    public OrderUserDto addOrder(
+            @Valid @RequestBody OrderUserDto theOrder
+    ) {
         theOrder.setId(null);
         return orderService.save(theOrder);
     }
 
     @PutMapping("/{orderId}")
-    public Order updateOrder(
+    public OrderUserDto updateOrder(
             @PathVariable Integer orderId,
-            @Valid @RequestBody Order theOrder
+            @Valid @RequestBody OrderUserDto theOrder
     ) {
         theOrder.setId(orderId);
         System.out.println(theOrder.getId());
