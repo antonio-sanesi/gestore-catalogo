@@ -23,7 +23,8 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((authz) -> {
             authz
-                    .requestMatchers("auth/*").permitAll()
+                    .requestMatchers("auth/login").permitAll()
+                    .requestMatchers("auth/signup").permitAll()
                     .anyRequest().authenticated();
         });
 
