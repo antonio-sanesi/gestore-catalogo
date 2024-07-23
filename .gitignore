@@ -36,3 +36,4 @@ build/
 .env
 
 src/main/resources/*.pem
+README2.md
