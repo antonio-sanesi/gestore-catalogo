@@ -2,6 +2,7 @@ package dev.anto.gestore.catalogo.controller;
 
 import dev.anto.gestore.catalogo.dto.LoginDto;
 import dev.anto.gestore.catalogo.dto.SignUpDto;
+import dev.anto.gestore.catalogo.dto.UserDto;
 import dev.anto.gestore.catalogo.security.JwtService;
 import dev.anto.gestore.catalogo.service.interfaces.UserService;
 import jakarta.validation.Valid;
@@ -32,6 +33,18 @@ public class AuthController {
     ) {
         userService.signup(userData);
         return jwtService.login(userData.getEmail(), userData.getPassword());
+    }
+
+    @GetMapping("user")
+    public UserDto getUser(){
+        return userService.getUser();
+    }
+
+    @PutMapping("user")
+    public UserDto editUser(
+            @Valid @RequestBody SignUpDto userData
+    ){
+        return userService.editUser(userData);
     }
 
 }
