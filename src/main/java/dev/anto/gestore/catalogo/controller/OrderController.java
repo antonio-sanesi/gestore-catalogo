@@ -3,6 +3,7 @@ package dev.anto.gestore.catalogo.controller;
 import dev.anto.gestore.catalogo.dto.OrderUserDto;
 import dev.anto.gestore.catalogo.entity.Order;
 import dev.anto.gestore.catalogo.service.interfaces.OrderService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class OrderController {
         return orderService.findAllByUser();
     }
 
+    @RolesAllowed("CUSTOMER")
     @PostMapping("")
     public OrderUserDto addOrder(
             @Valid @RequestBody OrderUserDto theOrder
@@ -29,6 +31,7 @@ public class OrderController {
         return orderService.save(theOrder);
     }
 
+    @RolesAllowed("CUSTOMER")
     @PutMapping("/{orderId}")
     public OrderUserDto updateOrder(
             @PathVariable Integer orderId,
@@ -39,6 +42,7 @@ public class OrderController {
         return orderService.save(theOrder);
     }
 
+    @RolesAllowed("ADMIN")
     @DeleteMapping("/{orderId}")
     public String deleteProduct(@PathVariable int orderId) {
         orderService.deleteById(orderId);

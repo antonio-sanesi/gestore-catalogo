@@ -3,8 +3,10 @@ package dev.anto.gestore.catalogo.controller;
 
 import dev.anto.gestore.catalogo.entity.Product;
 import dev.anto.gestore.catalogo.service.interfaces.ProductService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +28,14 @@ public class ProductController {
         return productService.findById(productId);
     }
 
+    @RolesAllowed({ "ADMIN", "PRODM" })
     @PostMapping("")
     public Product addProduct(@Valid @RequestBody Product theProduct) {
         theProduct.setId(null);
         return productService.save(theProduct);
     }
 
+    @RolesAllowed({ "ADMIN", "PRODM" })
     @PutMapping("/{productId}")
     public Product updateProduct(
             @PathVariable Integer productId,
@@ -42,6 +46,7 @@ public class ProductController {
         return productService.save(theProduct);
     }
 
+    @RolesAllowed({ "ADMIN" })
     @DeleteMapping("/{productId}")
     public String deleteProduct(@PathVariable int productId) {
         productService.deleteById(productId);
