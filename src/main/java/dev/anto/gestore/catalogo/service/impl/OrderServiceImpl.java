@@ -1,5 +1,6 @@
 package dev.anto.gestore.catalogo.service.impl;
 
+import dev.anto.gestore.catalogo.dto.OrderAdminDto;
 import dev.anto.gestore.catalogo.dto.OrderUserDto;
 import dev.anto.gestore.catalogo.entity.Order;
 import dev.anto.gestore.catalogo.repository.OrderRepository;
@@ -64,6 +65,13 @@ public class OrderServiceImpl implements OrderService {
         var saved = orderRepository.save(theOrder);
 
         return modelMapper.map(saved, OrderUserDto.class);
+    }
+
+    @Override
+    public List<OrderAdminDto> findAll() {
+        return orderRepository.findAll().stream()
+                .map(it -> modelMapper.map(it, OrderAdminDto.class))
+                .toList();
     }
 
     @Override

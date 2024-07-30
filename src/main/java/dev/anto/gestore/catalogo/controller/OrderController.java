@@ -1,7 +1,7 @@
 package dev.anto.gestore.catalogo.controller;
 
+import dev.anto.gestore.catalogo.dto.OrderAdminDto;
 import dev.anto.gestore.catalogo.dto.OrderUserDto;
-import dev.anto.gestore.catalogo.entity.Order;
 import dev.anto.gestore.catalogo.service.interfaces.OrderService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
@@ -20,6 +20,12 @@ public class OrderController {
     @GetMapping("")
     public List<OrderUserDto> getAllOrdersByUser(){
         return orderService.findAllByUser();
+    }
+
+    @RolesAllowed("ADMIN")
+    @GetMapping("all")
+    public List<OrderAdminDto> getAllOrders(){
+        return orderService.findAll();
     }
 
     @RolesAllowed("CUSTOMER")

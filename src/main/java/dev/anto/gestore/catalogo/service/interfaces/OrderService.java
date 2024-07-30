@@ -1,5 +1,6 @@
 package dev.anto.gestore.catalogo.service.interfaces;
 
+import dev.anto.gestore.catalogo.dto.OrderAdminDto;
 import dev.anto.gestore.catalogo.dto.OrderUserDto;
 import dev.anto.gestore.catalogo.entity.Order;
 
@@ -18,4 +19,6 @@ public interface OrderService {
 
 
     OrderUserDto save(OrderUserDto theOrder);
+
+    List<OrderAdminDto> findAll();
 }
