@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -42,9 +44,13 @@ public class User implements UserDetails {
     @Column(name = "surname", length = 100)
     private String surname;
 
+    @Column(name = "role")
+    private String role;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        var authority = new SimpleGrantedAuthority("ROLE_" + this.role);
+        return List.of(authority);
     }
 
     @Override

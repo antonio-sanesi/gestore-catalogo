@@ -2,6 +2,7 @@ package dev.anto.gestore.catalogo.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,6 +35,15 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(error, exc.getStatusCode());
+    }
+
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<ErrorDto> handleException(AuthorizationDeniedException exc){
+        ErrorDto error = new ErrorDto();
+        error.setStatus(HttpStatus.FORBIDDEN.value());
+        error.setMessage(exc.getLocalizedMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler

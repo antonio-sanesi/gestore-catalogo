@@ -3,14 +3,14 @@ package dev.anto.gestore.catalogo.controller;
 import dev.anto.gestore.catalogo.dto.LoginDto;
 import dev.anto.gestore.catalogo.dto.SignUpDto;
 import dev.anto.gestore.catalogo.dto.UserDto;
+import dev.anto.gestore.catalogo.security.AuthService;
 import dev.anto.gestore.catalogo.security.JwtService;
 import dev.anto.gestore.catalogo.service.interfaces.UserService;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("auth")
@@ -19,6 +19,7 @@ public class AuthController {
 
     private final JwtService jwtService;
     private final UserService userService;
+    private final AuthService authService;
 
     @PostMapping("login")
     public String login(
@@ -33,6 +34,11 @@ public class AuthController {
     ) {
         userService.signup(userData);
         return jwtService.login(userData.getEmail(), userData.getPassword());
+    }
+
+    @GetMapping("authorities")
+    public List<String> authorities(){
+        return authService.getAuthorities();
     }
 
     @GetMapping("user")
