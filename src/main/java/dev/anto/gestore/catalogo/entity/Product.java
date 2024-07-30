@@ -38,4 +38,7 @@ public class Product {
     @NotNull(message = "Il prezzo non dev'essere vuoto")
     @Min(value = 0, message = "Il prezzo dev'essere maggiore di 0")
     private BigDecimal price;
+
+    @Column(name = "visible")
+    private Boolean visible = true;
 }
